@@ -1,8 +1,19 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 
 const LanguageDropdown = ({language}: { language: string[] }) => {
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedLanguage, setSelectedLanguage] = useState(language[0]);
+    const [selectedLanguage, setSelectedLanguage] = useState('');
+    const [isClient, setIsClient] = useState(false);
+
+    useEffect(() => {
+        setIsClient(true);
+    }, []);
+
+    useEffect(() => {
+        if (isClient) {
+            setSelectedLanguage(localStorage.getItem('selectedLanguage') || (language.length > 0 ? language[0] : ''));
+        }
+    }, [isClient, language]);
 
     const handleDropdownClick = () => {
         setIsOpen(!isOpen);
@@ -11,6 +22,9 @@ const LanguageDropdown = ({language}: { language: string[] }) => {
     const handleOptionClick = (lang: string) => {
         setSelectedLanguage(lang);
         setIsOpen(false);
+        if (typeof window !== 'undefined') {
+            localStorage.setItem('selectedLanguage', lang);
+        }
     };
 
     return (
