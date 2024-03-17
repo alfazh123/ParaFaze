@@ -25,7 +25,7 @@ export default function Navbar() {
                     </p>
                 </Link>
                 <Link
-                    href="/"
+                    href="/login"
                     className="border-solid border-2 border-slate-600 rounded-lg text-slate-600 md:py-2 py-1 md:font-bold md:text-base text-sm font-semibold hover:bg-slate-600
                     hover:text-white transition-all duration-300 ease-in-out px-4 md:px-6"
                 >

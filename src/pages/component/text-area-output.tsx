@@ -4,12 +4,14 @@ import React from "react";
 export function TextAreaOutput({...params}) {
     const textOutput = params.textOutput ? params.textOutput : "";
 
-    function copyToClipboard() {
-        navigator.clipboard.writeText(textOutput);
-        alert("Copied to clipboard");
+    const copyToClipboard = () => {
+        navigator.clipboard.writeText(textOutput)
+            .then(
+                _ => alert("Copied to clipboard")
+            );
     }
 
-    function downloadText() {
+    const downloadText = () => {
         const element = document.createElement("a");
         const file = new Blob([textOutput], {type: 'text/plain'});
         element.href = URL.createObjectURL(file);
