@@ -33,17 +33,19 @@ export default function Home() {
     return (
         <main className="flex flex-col items-center bg-sky-100 min-h-screen">
             <Navbar/>
-            <div className={`w-full lg:max-w-6xl pt-16`}>
-                <div className="flex flex-wrap md:text-base text-sm justify-between w-full md:px-7 px-2">
-                    <div className="flex gap-4">
+            <div className={`w-full lg:max-w-6xl pt-16 px-4 md:px-8`}>
+                <div className="flex flex-wrap md:text-base text-sm justify-between w-full">
+                    <div className="flex gap-2 md:gap-4">
                         {BUTTONS.map(renderButton)}
                     </div>
                     <LanguageDropdown language={LANGUAGE}/>
                 </div>
                 <div
-                    className="grid md:grid-cols-2 grid-cols-1 md:space-x-2 md:space-y-0 space-x-0 space-y-4 p-2 rounded-lg w-full">
+                    className="grid md:grid-cols-2 grid-cols-1 md:space-x-2 md:space-y-0 space-x-0 space-y-4 rounded-lg w-full pt-6 gap-4 pb-6">
                     <TextAreaInput/>
-                    <TextAreaOutput/>
+                    <div className={`md:grid hidden`}>
+                        <TextAreaOutput/>
+                    </div>
                 </div>
                 <div className="flex flex-col gap-5 w-full">
                     <button
@@ -52,6 +54,9 @@ export default function Home() {
                     >
                         <SlPencil className="text-lg"/> Parafrase Teks
                     </button>
+                    <div className={`md:hidden pb-6`}>
+                        <TextAreaOutput/>
+                    </div>
                 </div>
             </div>
         </main>

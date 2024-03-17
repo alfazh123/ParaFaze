@@ -34,7 +34,7 @@ export function TextAreaInput() {
     };
 
     return (
-        <div className="p-5 w-full flex flex-col">
+        <div className="w-full flex flex-col">
             <div className="rounded-md">
                 <div className="flex flex-col">
                     <label
