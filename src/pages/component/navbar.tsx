@@ -1,13 +1,13 @@
+import Profile from "@/pages/component/profile"
 import { useSession } from "next-auth/react"
 import Image from "next/image"
 import Link from "next/link"
-import Profile from "./profile"
 
 export default function Navbar() {
     const { data: session } = useSession()
 
     return (
-        <nav className="bg-sky-900 w-full px-4 py-4 md:px-8 drop-shadow-xl">
+        <nav className="bg-sky-900 w-full px-4 py-4 md:px-8 drop-shadow-xl select-none">
             <div
                 className={`lg:max-w-6xl mx-auto flex items-center justify-between`}
             >

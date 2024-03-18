@@ -31,7 +31,7 @@ const LanguageDropdown = ({ language }: { language: string[] }) => {
     }
 
     return (
-        <div className="relative inline-block text-left">
+        <div className="relative inline-block text-left select-none">
             <div>
                 <button
                     type="button"

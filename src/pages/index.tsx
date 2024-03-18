@@ -32,7 +32,7 @@ export default function Home() {
             <button
                 title={buttonName}
                 type="button"
-                className={`md:px-4 md:py-2 px-2 py-1 rounded-lg text-white font-semibold shadow-md  transition-all duration-300 ease-in-out ${
+                className={`md:px-4 md:py-2 px-2 py-1 select-none rounded-lg text-white font-semibold shadow-md  transition-all duration-300 ease-in-out ${
                     activeButton === buttonName
                         ? activeUsageButton
                         : inactiveUsageButton
@@ -52,13 +52,13 @@ export default function Home() {
     return (
         <>
             <Head>
-                <title>ParaFaze - Lakukan parafrase dengan mudah</title>
+                <title>ParaFaze - Fast and Accurate Paraphrasing Tool</title>
                 <meta
                     name="viewport"
                     content="width=device-width, initial-scale=1.0"
                 />
             </Head>
-            <main className="bg-[#b1d4e0] flex flex-col items-center min-h-screen font-inter pb-4">
+            <main className="bg-slate-100 flex flex-col items-center min-h-screen font-inter pb-4">
                 <Navbar />
                 <div className={`w-full lg:max-w-6xl pt-16 px-4 md:px-8`}>
                     <div className="flex flex-wrap md:text-base text-sm justify-between w-full">
@@ -82,7 +82,7 @@ export default function Home() {
                             type="submit"
                             className="bg-green-600 flex justify-center items-center text-white py-3 rounded-lg gap-2 w-fit mx-auto px-4 hover:bg-green-800 transition-all duration-300 ease-in-out font-semibold tracking-tight shadow-md"
                         >
-                            <SlPencil className="text-lg" /> Parafrase Teks
+                            <SlPencil className="text-lg" /> Paraphrase Text
                         </button>
                         <div className={`md:hidden pb-6`}>
                             <TextAreaOutput />

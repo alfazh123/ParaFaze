@@ -18,7 +18,10 @@ export function TextAreaOutput({ textOutput = "" }) {
 
     return (
         <div className="flex flex-col p-5 space-y-4 bg-white rounded-lg shadow-md">
-            <label htmlFor="output" className="text-gray-700 font-semibold">
+            <label
+                htmlFor="output"
+                className="text-gray-700 font-semibold select-none"
+            >
                 Paraphrased Text
             </label>
             <textarea

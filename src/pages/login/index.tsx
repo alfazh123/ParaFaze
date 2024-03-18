@@ -41,7 +41,7 @@ const LoginPage = () => {
                             Log in to continue access to ParaFaze
                         </p>
                     </div>
-                    <div className="space-y-2 flex flex-col items-center mb-6">
+                    <div className="space-y-2 flex flex-col items-center mb-6 select-none">
                         <button
                             onClick={() =>
                                 signIn("google", {

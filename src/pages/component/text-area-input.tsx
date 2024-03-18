@@ -35,7 +35,10 @@ export function TextAreaInput({ inputLimit = 5000 }) {
 
     return (
         <div className="flex flex-col p-5 space-y-4 bg-white rounded-lg shadow-md">
-            <label htmlFor="input" className="text-gray-700 font-semibold">
+            <label
+                htmlFor="input"
+                className="text-gray-700 font-semibold select-none"
+            >
                 Input Text
             </label>
             <textarea
@@ -60,7 +63,7 @@ export function TextAreaInput({ inputLimit = 5000 }) {
                     />
                     <label
                         htmlFor="fileUpload"
-                        className="bg-slate-500 text-white py-2 px-4 rounded cursor-pointer hover:bg-slate-600 transition duration-200 md:text-sm text-xs"
+                        className="bg-slate-500 text-white py-1 px-2 md:py-2 md:px-4 rounded cursor-pointer hover:bg-slate-600 transition duration-200 md:text-sm text-xs select-none"
                     >
                         Select File .Doc / .Docx / .Pdf /.Txt
                     </label>
