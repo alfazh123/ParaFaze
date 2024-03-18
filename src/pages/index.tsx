@@ -1,33 +1,33 @@
-import { SlPencil } from "react-icons/sl";
-import { useState } from "react";
-import Head from "next/head";
+import Head from "next/head"
+import { useState } from "react"
+import { SlPencil } from "react-icons/sl"
 
-import { TextAreaOutput } from "@/pages/component/text-area-output";
-import { TextAreaInput } from "@/pages/component/text-area-input";
-import Navbar from "@/pages/component/navbar";
-import LanguageDropdown from "@/pages/component/lang-dropdown";
+import LanguageDropdown from "@/pages/component/lang-dropdown"
+import Navbar from "@/pages/component/navbar"
+import { TextAreaInput } from "@/pages/component/text-area-input"
+import { TextAreaOutput } from "@/pages/component/text-area-output"
 
-import { useSession } from "next-auth/react";
+import { useSession } from "next-auth/react"
 
-const LANGUAGE = ["English", "Indonesia", "Arabic", "Spanish"];
-const BUTTONS = ["Standard", "Premium"];
+const LANGUAGE = ["English", "Indonesia", "Arabic", "Spanish"]
+const BUTTONS = ["Standard", "Premium"]
 
 const activeUsageButton =
-    "bg-red-600 hover:bg-red-800 transition duration-500 ease-in-out";
+    "bg-red-600 hover:bg-red-800 transition duration-500 ease-in-out"
 const inactiveUsageButton =
-    "bg-gray-400 hover:bg-gray-600 transition duration-500 ease-in-out";
+    "bg-gray-400 hover:bg-gray-600 transition duration-500 ease-in-out"
 
 export default function Home() {
-    const { data: session } = useSession();
+    const { data: session } = useSession()
 
-    const [activeButton, setActiveButton] = useState("Standard");
+    const [activeButton, setActiveButton] = useState("Standard")
 
     const handleButtonClick = (buttonName: string) => {
-        setActiveButton(buttonName);
-    };
+        setActiveButton(buttonName)
+    }
 
     const renderButton = (buttonName: string) => {
-        const buttonDisabled = buttonName === "Premium" && !session;
+        const buttonDisabled = buttonName === "Premium" && !session
         return (
             <button
                 title={buttonName}
@@ -46,8 +46,8 @@ export default function Home() {
             >
                 {buttonName}
             </button>
-        );
-    };
+        )
+    }
 
     return (
         <>
@@ -91,5 +91,5 @@ export default function Home() {
                 </div>
             </main>
         </>
-    );
+    )
 }

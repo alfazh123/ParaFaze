@@ -1,37 +1,37 @@
-import React, { useState } from "react";
+import React, { useState } from "react"
 
 export function TextAreaInput({ inputLimit = 5000 }) {
-    const [text, setText] = useState("");
+    const [text, setText] = useState("")
 
     React.useEffect(() => {
-        const cachedText = localStorage.getItem('cachedText');
+        const cachedText = localStorage.getItem("cachedText")
         if (cachedText) {
-            setText(cachedText);
+            setText(cachedText)
         }
-    }, []);
+    }, [])
 
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        const words = e.target.value.split(" ");
+        const words = e.target.value.split(" ")
         if (words.length > inputLimit) {
-            words.splice(inputLimit, words.length - inputLimit);
+            words.splice(inputLimit, words.length - inputLimit)
         }
-        const newText = words.join(" ");
-        setText(newText);
-        localStorage.setItem('cachedText', newText);
-    };
+        const newText = words.join(" ")
+        setText(newText)
+        localStorage.setItem("cachedText", newText)
+    }
 
     const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
+        const file = e.target.files?.[0]
         if (file) {
-            const reader = new FileReader();
-            reader.onload = (e) => setText(e.target?.result as string);
-            reader.readAsText(file);
+            const reader = new FileReader()
+            reader.onload = (e) => setText(e.target?.result as string)
+            reader.readAsText(file)
         }
-    };
+    }
 
     const wordCounts = (str: string) => {
-        return str.split(" ").length - 1;
-    };
+        return str.split(" ").length - 1
+    }
 
     return (
         <div className="flex flex-col p-5 space-y-4 bg-white rounded-lg shadow-md">
@@ -66,10 +66,9 @@ export function TextAreaInput({ inputLimit = 5000 }) {
                     </label>
                 </div>
                 <p className="text-gray-700 md:text-sm text-xs">
-                    Words : {wordCounts(text)}
-                    /{inputLimit}
+                    Words : {wordCounts(text)}/{inputLimit}
                 </p>
             </div>
         </div>
-    );
+    )
 }

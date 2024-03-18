@@ -1,10 +1,10 @@
-import { signOut, useSession } from "next-auth/react";
-import Image from "next/image";
-import Link from "next/link";
-import Profile from "./profile";
+import { useSession } from "next-auth/react"
+import Image from "next/image"
+import Link from "next/link"
+import Profile from "./profile"
 
 export default function Navbar() {
-    const { data: session } = useSession();
+    const { data: session } = useSession()
 
     return (
         <nav className="bg-sky-900 w-full px-4 py-4 md:px-8 drop-shadow-xl">
@@ -44,5 +44,5 @@ export default function Navbar() {
                 )}
             </div>
         </nav>
-    );
+    )
 }

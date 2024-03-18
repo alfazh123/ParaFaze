@@ -1,30 +1,30 @@
-import { useState, useEffect, useRef } from "react";
-import { IoPersonCircleOutline, IoLogOutOutline } from "react-icons/io5";
-import { signOut } from "next-auth/react";
+import { signOut } from "next-auth/react"
+import { useEffect, useRef, useState } from "react"
+import { IoLogOutOutline, IoPersonCircleOutline } from "react-icons/io5"
 
 const Profile = () => {
-    const [isOpen, setIsOpen] = useState(false);
-    const dropdownRef = useRef<HTMLDivElement>(null);
+    const [isOpen, setIsOpen] = useState(false)
+    const dropdownRef = useRef<HTMLDivElement>(null)
 
     const handleDropdownClick = () => {
-        setIsOpen(!isOpen);
-    };
+        setIsOpen(!isOpen)
+    }
 
     const handleOutsideClick = (e: MouseEvent) => {
         if (
             dropdownRef.current &&
             !dropdownRef.current.contains(e.target as Node)
         ) {
-            setIsOpen(false);
+            setIsOpen(false)
         }
-    };
+    }
 
     useEffect(() => {
-        document.addEventListener("mousedown", handleOutsideClick);
+        document.addEventListener("mousedown", handleOutsideClick)
         return () => {
-            document.removeEventListener("mousedown", handleOutsideClick);
-        };
-    }, []);
+            document.removeEventListener("mousedown", handleOutsideClick)
+        }
+    }, [])
 
     return (
         <div ref={dropdownRef}>
@@ -52,7 +52,7 @@ const Profile = () => {
                 </div>
             )}
         </div>
-    );
-};
+    )
+}
 
-export default Profile;
+export default Profile
