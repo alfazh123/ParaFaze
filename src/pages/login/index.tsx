@@ -2,20 +2,18 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Head from "next/head";
-import { BiLeftArrowAlt } from "react-icons/bi";
-import { FcGoogle } from "react-icons/fc";
-import { useSession, signIn, signOut } from "next-auth/react";
+import {BiLeftArrowAlt} from "react-icons/bi";
+import {FcGoogle} from "react-icons/fc";
+import {useSession, signIn, signOut} from "next-auth/react";
+
 
 const LoginPage = () => {
-    const { data: session } = useSession();
+    const {data: session} = useSession();
     if (session) {
-        return (
-            <>
-                Signed in <br />
-                <button onClick={() => signOut()}>Sign out</button>
-            </>
-        );
+        const redirect = "/";
+        return window.location.href = redirect;
     }
+
     return (
         <>
             <Head>
@@ -25,7 +23,7 @@ const LoginPage = () => {
                     content="width=device-width, initial-scale=1.0"
                 />
             </Head>
-            <main className="bg-sky-100 min-h-screen flex flex-col items-center justify-center pb-16">
+            <main className="bg-slate-100 min-h-screen flex flex-col items-center justify-center pb-16">
                 <div className="rounded-3xl bg-white shadow-md w-fit mx-4 py-5 px-12 md:px-24 mb-6">
                     <div className="flex flex-col p-6">
                         <Image
@@ -54,7 +52,7 @@ const LoginPage = () => {
                             }
                             className="inline-flex items-center justify-center rounded-xl text-xs md:text-sm font-medium transition-all active:scale-95 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 py-4 bg-sky-100 px-4 md:px-8 hover:bg-sky-200 transform duration-500 ease-in-out active:bg-sky-300"
                         >
-                            <FcGoogle className={`mr-6 text-lg`} />
+                            <FcGoogle className={`mr-6 text-lg`}/>
                             Login With Google
                         </button>
                     </div>
@@ -63,7 +61,7 @@ const LoginPage = () => {
                     href={"/"}
                     className={`inline-flex items-center gap-2 text-slate-600 hover:text-slate-800 text-sm`}
                 >
-                    <BiLeftArrowAlt /> Back to Home
+                    <BiLeftArrowAlt/> Back to Home
                 </Link>
             </main>
         </>

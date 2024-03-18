@@ -1,9 +1,7 @@
-import {FaCopy, FaDownload} from "react-icons/fa";
+import { FaCopy, FaDownload } from "react-icons/fa";
 import React from "react";
 
-export function TextAreaOutput({...params}) {
-    const textOutput = params.textOutput ? params.textOutput : "";
-
+export function TextAreaOutput({ textOutput = "" }) {
     const copyToClipboard = () => {
         navigator.clipboard.writeText(textOutput)
             .then(
@@ -13,7 +11,7 @@ export function TextAreaOutput({...params}) {
 
     const downloadText = () => {
         const element = document.createElement("a");
-        const file = new Blob([textOutput], {type: 'text/plain'});
+        const file = new Blob([textOutput], { type: 'text/plain' });
         element.href = URL.createObjectURL(file);
         element.download = "output.txt";
         document.body.appendChild(element);
@@ -21,46 +19,36 @@ export function TextAreaOutput({...params}) {
     }
 
     return (
-        <div className="w-full flex flex-col">
-            <div className="rounded-md">
-                <div className="flex flex-col">
-                    <label
-                        htmlFor="output"
-                        className="text-gray-800 text-opacity-80 bg-gray-200 rounded-t-md py-2 pl-4 font-semibold select-none"
-                    >
-                        Teks Parafrase
-                    </label>
-                    <textarea
-                        title="output"
-                        name="output"
-                        id=""
-                        rows={15}
-                        className="text-gray-600 py-4 pl-4 outline-none w-full text-area-scrollbar pr-2"
-                        readOnly
-                        value={textOutput}
-                        style={{resize: "none"}}
-                        placeholder={"Teks hasil parafrase akan muncul disini..."}
-                    ></textarea>
-                </div>
-                <div className="flex bg-gray-200 p-2 rounded-b-md justify-end w-full pr-4">
-                    <div className="flex gap-4">
-                        <button
-                            onClick={copyToClipboard}
-                            title="copyButton"
-                            className="bg-white p-2 rounded-lg text-gray-700 hover:bg-sky-100 transition duration-200 ease-in-out"
-                        >
-                            <FaCopy/>
-                        </button>
+        <div className="flex flex-col p-5 space-y-4 bg-white rounded-lg shadow-md">
+            <label htmlFor="output" className="text-gray-700 font-semibold">
+                Paraphrased Text
+            </label>
+            <textarea
+                title="Paraphrased text will appear here"
+                name="User Output"
+                rows={15}
+                className="p-4 outline-none w-full bg-gray-100 rounded shadow-inner"
+                readOnly
+                value={textOutput}
+                style={{ resize: "none", fontFamily: "Inter, sans-serif" }}
+                placeholder="Paraphrased text will appear here..."
+            ></textarea>
+            <div className="flex justify-end items-center space-x-4">
+                <button
+                    onClick={copyToClipboard}
+                    title="copyButton"
+                    className="bg-blue-500 text-white py-2 px-4 rounded cursor-pointer hover:bg-blue-600 transition duration-200"
+                >
+                    <FaCopy />
+                </button>
 
-                        <button
-                            onClick={downloadText}
-                            title="downloadButton"
-                            className="bg-white p-2 rounded-lg text-gray-700 hover:bg-sky-100 transition duration-200 ease-in-out"
-                        >
-                            <FaDownload/>
-                        </button>
-                    </div>
-                </div>
+                <button
+                    onClick={downloadText}
+                    title="downloadButton"
+                    className="bg-green-500 text-white py-2 px-4 rounded cursor-pointer hover:bg-green-600 transition duration-200"
+                >
+                    <FaDownload />
+                </button>
             </div>
         </div>
     );
