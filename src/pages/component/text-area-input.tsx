@@ -1,6 +1,6 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 
-export function TextAreaInput() {
+export function TextAreaInput({ inputLimit = 5000 }) {
     const [text, setText] = useState("");
 
     React.useEffect(() => {
@@ -12,12 +12,12 @@ export function TextAreaInput() {
 
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         const words = e.target.value.split(" ");
-        if (words.length > 500) {
-            words.splice(500, words.length - 500);
+        if (words.length > inputLimit) {
+            words.splice(inputLimit, words.length - inputLimit);
         }
         const newText = words.join(" ");
         setText(newText);
-        localStorage.setItem('cachedText', newText); // Store the text input in localStorage
+        localStorage.setItem('cachedText', newText);
     };
 
     const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,52 +34,41 @@ export function TextAreaInput() {
     };
 
     return (
-        <div className="w-full flex flex-col">
-            <div className="rounded-md">
-                <div className="flex flex-col">
+        <div className="flex flex-col p-5 space-y-4 bg-white rounded-lg shadow-md">
+            <label htmlFor="input" className="text-gray-700 font-semibold">
+                Input Text
+            </label>
+            <textarea
+                title="Enter your text here"
+                name="User Input"
+                rows={15}
+                className="p-4 outline-none w-full bg-gray-100 rounded shadow-inner"
+                onChange={handleChange}
+                draggable={false}
+                style={{ resize: "none", fontFamily: "Inter, sans-serif" }}
+                placeholder="Enter your text here..."
+                value={text}
+            ></textarea>
+            <div className="flex justify-between items-center">
+                <div>
+                    <input
+                        type="file"
+                        accept=".doc,.docx,.pdf,.txt"
+                        onChange={handleFileUpload}
+                        className="hidden"
+                        id="fileUpload"
+                    />
                     <label
-                        htmlFor="input"
-                        className="text-gray-800 text-opacity-80 bg-gray-200 rounded-t-md py-2 pl-4 font-semibold select-none"
+                        htmlFor="fileUpload"
+                        className="bg-slate-500 text-white py-2 px-4 rounded cursor-pointer hover:bg-slate-600 transition duration-200 md:text-sm text-xs"
                     >
-                        Input Teks
+                        Select File .Doc / .Docx / .Pdf /.Txt
                     </label>
-                    <textarea
-                        title="input"
-                        name="input"
-                        id=""
-                        rows={15}
-                        className="text-gray-600 py-4 pl-4 outline-none w-full text-area-scrollbar pr-2"
-                        onChange={handleChange}
-                        draggable={false}
-                        style={{resize: "none"}}
-                        placeholder="Masukkan teks anda disini..."
-                        value={text}
-                    ></textarea>
                 </div>
-                <div className="flex flex-wrap bg-gray-200 p-2 rounded-b-md justify-between w-full">
-                    <div className="flex items-center">
-                        <input
-                            type="file"
-                            accept=".doc,.docx,.pdf,.txt"
-                            onChange={handleFileUpload}
-                            className="hidden"
-                            id="fileUpload"
-                        />
-                        <label
-                            htmlFor="fileUpload"
-                            className="bg-white text-gray-800 py-2 rounded-md text-xs pr-4 pl-2 hover:bg-sky-100 transition duration-200 ease-in-out cursor-pointer select-none"
-                        >
-                            🔗
-                            <span className="pl-2">
-                                Select File .Doc / .Docx / .Pdf /.Txt
-                            </span>
-                        </label>
-                    </div>
-                    <p className="flex text-gray-800 text-sm justify-center items-center p-2">
-                        Words : {wordCounts(text)}
-                        /500
-                    </p>
-                </div>
+                <p className="text-gray-700 md:text-sm text-xs">
+                    Words : {wordCounts(text)}
+                    /{inputLimit}
+                </p>
             </div>
         </div>
     );
