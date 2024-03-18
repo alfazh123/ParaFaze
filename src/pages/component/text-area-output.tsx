@@ -1,26 +1,27 @@
-import { FaCopy, FaDownload } from "react-icons/fa";
-import React from "react";
+import { FaCopy, FaDownload } from "react-icons/fa"
 
 export function TextAreaOutput({ textOutput = "" }) {
     const copyToClipboard = () => {
-        navigator.clipboard.writeText(textOutput)
-            .then(
-                _ => alert("Copied to clipboard")
-            );
+        navigator.clipboard
+            .writeText(textOutput)
+            .then((_) => alert("Copied to clipboard"))
     }
 
     const downloadText = () => {
-        const element = document.createElement("a");
-        const file = new Blob([textOutput], { type: 'text/plain' });
-        element.href = URL.createObjectURL(file);
-        element.download = "output.txt";
-        document.body.appendChild(element);
-        element.click();
+        const element = document.createElement("a")
+        const file = new Blob([textOutput], { type: "text/plain" })
+        element.href = URL.createObjectURL(file)
+        element.download = "output.txt"
+        document.body.appendChild(element)
+        element.click()
     }
 
     return (
         <div className="flex flex-col p-5 space-y-4 bg-white rounded-lg shadow-md">
-            <label htmlFor="output" className="text-gray-700 font-semibold">
+            <label
+                htmlFor="output"
+                className="text-gray-700 font-semibold select-none"
+            >
                 Paraphrased Text
             </label>
             <textarea
@@ -51,5 +52,5 @@ export function TextAreaOutput({ textOutput = "" }) {
                 </button>
             </div>
         </div>
-    );
+    )
 }
