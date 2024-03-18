@@ -2,8 +2,22 @@ import React, {useState} from "react";
 
 export function TextAreaInput() {
     const [text, setText] = useState("");
+
+    React.useEffect(() => {
+        const cachedText = localStorage.getItem('cachedText');
+        if (cachedText) {
+            setText(cachedText);
+        }
+    }, []);
+
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setText(e.target.value);
+        const words = e.target.value.split(" ");
+        if (words.length > 500) {
+            words.splice(500, words.length - 500);
+        }
+        const newText = words.join(" ");
+        setText(newText);
+        localStorage.setItem('cachedText', newText); // Store the text input in localStorage
     };
 
     const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -20,12 +34,12 @@ export function TextAreaInput() {
     };
 
     return (
-        <div className="p-5 w-full flex flex-col">
+        <div className="w-full flex flex-col">
             <div className="rounded-md">
                 <div className="flex flex-col">
                     <label
                         htmlFor="input"
-                        className="text-gray-800 text-opacity-80 bg-gray-200 rounded-t-md py-2 pl-4 font-semibold"
+                        className="text-gray-800 text-opacity-80 bg-gray-200 rounded-t-md py-2 pl-4 font-semibold select-none"
                     >
                         Input Teks
                     </label>
@@ -34,11 +48,12 @@ export function TextAreaInput() {
                         name="input"
                         id=""
                         rows={15}
-                        className="text-gray-800 py-4 pl-4 outline-none w-full"
+                        className="text-gray-600 py-4 pl-4 outline-none w-full text-area-scrollbar pr-2"
                         onChange={handleChange}
                         draggable={false}
                         style={{resize: "none"}}
                         placeholder="Masukkan teks anda disini..."
+                        value={text}
                     ></textarea>
                 </div>
                 <div className="flex flex-wrap bg-gray-200 p-2 rounded-b-md justify-between w-full">
@@ -52,7 +67,7 @@ export function TextAreaInput() {
                         />
                         <label
                             htmlFor="fileUpload"
-                            className="bg-white text-gray-800 py-2 rounded-md text-xs pr-4 pl-2 hover:bg-sky-100 transition duration-200 ease-in-out cursor-pointer"
+                            className="bg-white text-gray-800 py-2 rounded-md text-xs pr-4 pl-2 hover:bg-sky-100 transition duration-200 ease-in-out cursor-pointer select-none"
                         >
                             🔗
                             <span className="pl-2">
