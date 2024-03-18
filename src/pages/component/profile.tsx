@@ -1,16 +1,33 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { IoPersonCircleOutline, IoLogOutOutline } from "react-icons/io5";
 import { signOut } from "next-auth/react";
 
 const Profile = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const dropdownRef = useRef<HTMLDivElement>(null);
 
     const handleDropdownClick = () => {
         setIsOpen(!isOpen);
     };
 
+    const handleOutsideClick = (e: MouseEvent) => {
+        if (
+            dropdownRef.current &&
+            !dropdownRef.current.contains(e.target as Node)
+        ) {
+            setIsOpen(false);
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener("mousedown", handleOutsideClick);
+        return () => {
+            document.removeEventListener("mousedown", handleOutsideClick);
+        };
+    }, []);
+
     return (
-        <div>
+        <div ref={dropdownRef}>
             <button title="profile" type="button" onClick={handleDropdownClick}>
                 <IoPersonCircleOutline className="text-5xl text-white rounded-full" />
             </button>
