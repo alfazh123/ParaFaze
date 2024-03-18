@@ -1,13 +1,16 @@
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
+import Profile from "./profile";
 
 export default function Navbar() {
     const { data: session } = useSession();
 
     return (
         <nav className="bg-sky-900 w-full px-4 py-4 md:px-8 drop-shadow-xl">
-            <div className={`lg:max-w-6xl mx-auto flex items-center justify-between`}>
+            <div
+                className={`lg:max-w-6xl mx-auto flex items-center justify-between`}
+            >
                 <Link
                     className="flex justify-between gap-2 items-start p-2 hover:text-slate-700 transition duration-200 ease-in-out"
                     href={"/"}
@@ -29,13 +32,7 @@ export default function Navbar() {
                 </Link>
 
                 {session ? (
-                    <button
-                        onClick={() => signOut()}
-                        className="rounded-lg text-slate-200 md:py-2 py-1 md:font-bold md:text-base text-sm font-semibold
-                        hover:text-white transition-all duration-300 ease-in-out px-6 md:px-8"
-                    >
-                        Logout
-                    </button>
+                    <Profile />
                 ) : (
                     <Link
                         href="/login"
