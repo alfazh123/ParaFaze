@@ -58,27 +58,27 @@ const LanguageDropdown = ({ language }: { language: string[] }) => {
                 </button>
             </div>
 
-            {isOpen && (
-                <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
-                    <div
-                        className="py-1"
-                        role="menu"
-                        aria-orientation="vertical"
-                        aria-labelledby="options-menu"
-                    >
-                        {language.map((lang) => (
-                            <a
-                                key={lang}
-                                onClick={() => handleOptionClick(lang)}
-                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                                role="menuitem"
-                            >
-                                {lang}
-                            </a>
-                        ))}
-                    </div>
+            <div
+                className={`origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 transform transition-all duration-300 ease-in-out ${isOpen ? "scale-100 translate-y-0 opacity-100" : "scale-0 -translate-y-2 opacity-0"}`}
+            >
+                <div
+                    className="py-1"
+                    role="menu"
+                    aria-orientation="vertical"
+                    aria-labelledby="options-menu"
+                >
+                    {language.map((lang) => (
+                        <a
+                            key={lang}
+                            onClick={() => handleOptionClick(lang)}
+                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                            role="menuitem"
+                        >
+                            {lang}
+                        </a>
+                    ))}
                 </div>
-            )}
+            </div>
         </div>
     )
 }
