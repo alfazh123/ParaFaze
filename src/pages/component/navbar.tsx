@@ -1,10 +1,20 @@
 import Profile from "@/pages/component/profile"
 import { useSession } from "next-auth/react"
+import { useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
+import Toast from "./toast"
 
 export default function Navbar() {
     const { data: session } = useSession()
+
+    useEffect(() => {
+        if (session) {
+            setTimeout(() => {
+                return <Toast />
+            }, 6000)
+        }
+    })
 
     return (
         <nav className="bg-sky-900 w-full px-4 py-4 md:px-8 drop-shadow-xl select-none">
@@ -32,7 +42,10 @@ export default function Navbar() {
                 </Link>
 
                 {session ? (
-                    <Profile />
+                    <div>
+                        <Toast />
+                        <Profile />
+                    </div>
                 ) : (
                     <Link
                         href="/login"
