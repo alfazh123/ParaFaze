@@ -17,8 +17,10 @@ const Toast = () => {
     }, [3000])
 
     return (
-        <div className={`absolute bg-slate-100 ring-2 ring-slate-300 px-3 py-2 rounded-md  xl:right-10 right-4 mr-4 md:w-60 w-48 text-xs flex-wrap top-20 ${isVisble ? "block" : "hidden"}`}>
-            Welcome {session?.user?.name} 🎉
+        <div className="w-full flex relative items-center justify-center">
+            <div className={`absolute bg-slate-100 ring-2 ring-blue-200 md:px-3 md:py-2 px-2 py-1 rounded-md right-4 mx-auto text-xs top-14 ease-in-out transition duration-700 ${isVisble ? "block" : "hidden"}`}>
+                Welcome {session?.user?.name} 🎉
+            </div>
         </div>
     )
 }
