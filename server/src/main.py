@@ -13,8 +13,9 @@ prompt = PromptTemplate.from_template(SYSTEM_PROMPT)
 
 llm = LlamaCpp(
     model_path=MODEL_PATH,
-    verbose=False,
+    verbose=True,
     n_gpu_layers=-1,
+    n_ctx=2048,
 )
 
 chain = LLMChain(prompt=prompt, llm=llm)
@@ -29,32 +30,25 @@ async def read_root():
 
 @app.post("/paraphrase")
 async def paraphrase(text: str):
-    """
-    The Maximum Context Length (MCL) of the model is 512 tokens.
-
-    The input text is split into meaningful chunks of sentences and paraphrased separately.
-    """
     res = ""
     sentences = sent_tokenize(text)
     chunks = []
     current_chunk = ""
+    current_chunk_length = 0
     for sentence in sentences:
         tokens = tokenizer.tokenize(sentence)
-        if len(tokenizer.tokenize(current_chunk)) + len(tokens) <= 256:
+        if current_chunk_length + len(tokens) <= 1536:
             current_chunk += sentence + " "
+            current_chunk_length += len(tokens)
         else:
             chunks.append(current_chunk.strip())
             current_chunk = sentence + " "
+            current_chunk_length = len(tokens)
     if current_chunk:
         chunks.append(current_chunk.strip())
 
     for chunk in chunks:
-        res += chain.run(chunk)
+        result = chain.run(chunk)
+        res += result
 
     return res
-
-
-if __name__ == "__main__":
-    import uvicorn
-
-    uvicorn.run(app, port=8000, host="localhost")
