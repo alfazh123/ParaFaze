@@ -9,7 +9,7 @@ import { TextAreaOutput } from "@/pages/component/text-area-output"
 
 import { useSession } from "next-auth/react"
 
-const LANGUAGE = ["English", "Indonesia", "Arabic", "Spanish"]
+const LANGUAGE = ["English", "Indonesia"]
 const BUTTONS = ["Standard", "Premium"]
 
 const activeUsageButton =
@@ -21,9 +21,37 @@ export default function Home() {
     const { data: session } = useSession()
 
     const [activeButton, setActiveButton] = useState("Standard")
+    const [textOutput, setTextOutput] = useState("")
+    const [isLoading, setIsLoading] = useState(false)
 
     const handleButtonClick = (buttonName: string) => {
         setActiveButton(buttonName)
+    }
+
+    const handleSubmit = async () => {
+        setIsLoading(true)
+        const inputText = localStorage.getItem("cachedText") || ""
+
+        try {
+            const response = await fetch("http://0.0.0.0:8000/paraphrase", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ text: inputText }),
+            })
+
+            if (!response.ok) {
+                console.error(`HTTP error! status: ${response.status}`)
+            } else {
+                const data = await response.json()
+                setTextOutput(data)
+            }
+        } catch (error) {
+            console.error("An error occurred while fetching the data.", error)
+        } finally {
+            setIsLoading(false)
+        }
     }
 
     const renderButton = (buttonName: string) => {
@@ -74,18 +102,24 @@ export default function Home() {
                             }
                         />
                         <div className={`md:grid hidden`}>
-                            <TextAreaOutput />
+                            <TextAreaOutput textOutput={textOutput} />
                         </div>
                     </div>
                     <div className="flex flex-col gap-5 w-full">
                         <button
                             type="submit"
-                            className="bg-green-600 flex justify-center items-center text-white py-3 rounded-lg gap-2 w-fit mx-auto px-4 hover:bg-green-800 transition-all duration-300 ease-in-out font-semibold tracking-tight shadow-md"
+                            className={`bg-green-600 flex justify-center items-center text-white py-3 rounded-lg gap-2 w-fit mx-auto px-4 ${
+                                isLoading
+                                    ? "bg-opacity-50 cursor-not-allowed"
+                                    : "hover:bg-green-800"
+                            } transition-all duration-300 ease-in-out font-semibold tracking-tight shadow-md`}
+                            onClick={handleSubmit}
+                            disabled={isLoading}
                         >
                             <SlPencil className="text-lg" /> Paraphrase Text
                         </button>
                         <div className={`md:hidden pb-6`}>
-                            <TextAreaOutput />
+                            <TextAreaOutput textOutput={textOutput} />
                         </div>
                     </div>
                 </div>

@@ -6,6 +6,7 @@ const TOAST_DISPLAY_DURATION = 2000
 const UserToast = () => {
     const { data: session } = useSession()
     const [isVisible, setIsVisible] = useState(false)
+    const [isMounted, setIsMounted] = useState(true)
 
     useEffect(() => {
         setIsVisible(true)
@@ -13,8 +14,13 @@ const UserToast = () => {
             setIsVisible(false)
         }, TOAST_DISPLAY_DURATION)
 
+        const unmountTimer = setTimeout(() => {
+            setIsMounted(false)
+        }, TOAST_DISPLAY_DURATION + 500)
+
         return () => {
             clearTimeout(timer)
+            clearTimeout(unmountTimer)
         }
     }, [])
 
@@ -25,6 +31,10 @@ const UserToast = () => {
     const visibilityClass = isVisible
         ? "opacity-100 transform translate-y-0"
         : "opacity-0 transform translate-y-10"
+
+    if (!isMounted) {
+        return null
+    }
 
     return (
         <div className={`${baseClass} ${visibilityClass}`}>

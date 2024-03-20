@@ -1,12 +1,12 @@
 import React, { useState } from "react"
 
 export function TextAreaInput({ inputLimit = 5000 }) {
-    const [text, setText] = useState("")
+    const [input, setInput] = useState("")
 
     React.useEffect(() => {
         const cachedText = localStorage.getItem("cachedText")
         if (cachedText) {
-            setText(cachedText)
+            setInput(cachedText)
         }
     }, [])
 
@@ -16,7 +16,7 @@ export function TextAreaInput({ inputLimit = 5000 }) {
             words.splice(inputLimit, words.length - inputLimit)
         }
         const newText = words.join(" ")
-        setText(newText)
+        setInput(newText)
         localStorage.setItem("cachedText", newText)
     }
 
@@ -24,7 +24,7 @@ export function TextAreaInput({ inputLimit = 5000 }) {
         const file = e.target.files?.[0]
         if (file) {
             const reader = new FileReader()
-            reader.onload = (e) => setText(e.target?.result as string)
+            reader.onload = (e) => setInput(e.target?.result as string)
             reader.readAsText(file)
         }
     }
@@ -50,7 +50,7 @@ export function TextAreaInput({ inputLimit = 5000 }) {
                 draggable={false}
                 style={{ resize: "none", fontFamily: "Inter, sans-serif" }}
                 placeholder="Enter your text here..."
-                value={text}
+                value={input}
             ></textarea>
             <div className="flex justify-between items-center">
                 <div>
@@ -69,7 +69,7 @@ export function TextAreaInput({ inputLimit = 5000 }) {
                     </label>
                 </div>
                 <p className="text-gray-700 md:text-sm text-xs">
-                    Words : {wordCounts(text)}/{inputLimit}
+                    Words : {wordCounts(input)}/{inputLimit}
                 </p>
             </div>
         </div>
