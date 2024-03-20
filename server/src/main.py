@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from langchain.chains import LLMChain
 from langchain.prompts import PromptTemplate
 from langchain_community.llms import LlamaCpp
@@ -7,6 +8,11 @@ from nltk.tokenize import sent_tokenize
 
 
 from config import MODEL_PATH, SYSTEM_PROMPT
+
+from pydantic import BaseModel
+
+class ParaphraseRequest(BaseModel):
+    text: str
 
 tokenizer = AutoTokenizer.from_pretrained("indischepartij/OpenMia-Indo-Mistral-7b-v4")
 prompt = PromptTemplate.from_template(SYSTEM_PROMPT)
@@ -22,6 +28,20 @@ chain = LLMChain(prompt=prompt, llm=llm)
 
 app = FastAPI()
 
+origins = [
+    "http://localhost",
+    "http://localhost:3000",
+    "http://localhost:8000",
+    "http://localhost:8080",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/")
 async def read_root():
@@ -29,7 +49,8 @@ async def read_root():
 
 
 @app.post("/paraphrase")
-async def paraphrase(text: str):
+async def paraphrase(request: ParaphraseRequest):
+    text = request.text
     res = ""
     sentences = sent_tokenize(text)
     chunks = []
