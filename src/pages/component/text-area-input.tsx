@@ -11,13 +11,12 @@ export function TextAreaInput({ inputLimit = 5000 }) {
     }, [])
 
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        const words = e.target.value.split(" ")
-        if (words.length > inputLimit) {
-            words.splice(inputLimit, words.length - inputLimit)
+        let text = e.target.value
+        if (text.length > inputLimit) {
+            text = text.slice(0, inputLimit)
         }
-        const newText = words.join(" ")
-        setInput(newText)
-        localStorage.setItem("cachedText", newText)
+        setInput(text)
+        localStorage.setItem("cachedText", text)
     }
 
     const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,8 +28,8 @@ export function TextAreaInput({ inputLimit = 5000 }) {
         }
     }
 
-    const wordCounts = (str: string) => {
-        return str.split(" ").length - 1
+    const charCounts = (str: string) => {
+        return str.length
     }
 
     return (
@@ -69,7 +68,7 @@ export function TextAreaInput({ inputLimit = 5000 }) {
                     </label>
                 </div>
                 <p className="text-gray-700 md:text-sm text-xs">
-                    Words : {wordCounts(input)}/{inputLimit}
+                    Characters : {charCounts(input)}/{inputLimit}
                 </p>
             </div>
         </div>
