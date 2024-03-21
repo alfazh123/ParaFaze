@@ -33,7 +33,7 @@ export default function Home() {
         const inputText = localStorage.getItem("cachedText") || ""
 
         try {
-            const response = await fetch("http://0.0.0.0:8000/paraphrase", {
+            const response = await fetch("http://localhost:8000/paraphrase", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
