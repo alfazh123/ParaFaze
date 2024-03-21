@@ -19,6 +19,9 @@ else
 	$(error Unsupported operating system. Please run on Linux, macOS, or Windows.)
 endif
 
+download-model:
+	cd server/model && wget "https://huggingface.co/indischepartij/OpenMia-Indo-Mistral-7b-v4-GGUF/resolve/main/openmia-indo-mistral-7b-v4.Q4_K_M.gguf"
+
 install-be:
 	cd server && $(VENV) && $(ACTIVATE) && pip install -r requirements.txt
 
