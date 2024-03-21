@@ -102,7 +102,7 @@ export default function Home() {
                             }
                         />
                         <div className={`md:grid hidden`}>
-                            <TextAreaOutput textOutput={textOutput} />
+                            <TextAreaOutput textOutput={textOutput}  isLoading={isLoading}/>
                         </div>
                     </div>
                     <div className="flex flex-col gap-5 w-full">
@@ -110,7 +110,7 @@ export default function Home() {
                             type="submit"
                             className={`bg-green-600 flex justify-center items-center text-white py-3 rounded-lg gap-2 w-fit mx-auto px-4 ${
                                 isLoading
-                                    ? "bg-opacity-50 cursor-not-allowed"
+                                    ? "bg-opacity-50 cursor-wait"
                                     : "hover:bg-green-800"
                             } transition-all duration-300 ease-in-out font-semibold tracking-tight shadow-md`}
                             onClick={handleSubmit}
@@ -119,7 +119,7 @@ export default function Home() {
                             <SlPencil className="text-lg" /> Paraphrase Text
                         </button>
                         <div className={`md:hidden pb-6`}>
-                            <TextAreaOutput textOutput={textOutput} />
+                            <TextAreaOutput textOutput={textOutput} isLoading={isLoading} />
                         </div>
                     </div>
                 </div>
