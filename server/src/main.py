@@ -5,7 +5,8 @@ from langchain.prompts import PromptTemplate
 from langchain_community.llms import LlamaCpp
 from transformers import AutoTokenizer
 from nltk.tokenize import sent_tokenize
-
+import nltk
+nltk.download('punkt')
 
 from config import MODEL_PATH, SYSTEM_PROMPT
 
