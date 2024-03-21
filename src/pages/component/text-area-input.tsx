@@ -49,8 +49,7 @@ export function TextAreaInput({ inputLimit = 5000 }) {
                 draggable={false}
                 style={{ resize: "none", fontFamily: "Inter, sans-serif" }}
                 placeholder="Enter your text here..."
-                value={input}
-            ></textarea>
+            >{input}</textarea>
             <div className="flex justify-between items-center">
                 <div>
                     <input
