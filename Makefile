@@ -1,22 +1,29 @@
-OS := $(shell uname)
+ifeq ($(OS),Windows_NT)
+	ACTIVATE = venv\Scripts\activate.bat
+	OS_DETECTED := Windows
+	VENV := python -m venv venv
+	RUN_CMD := uvicorn main:app --host 0.0.0.0 --port 8000
+else
+	OS_DETECTED := $(shell uname)
+	VENV := python3 -m venv venv
+	RUN_CMD := granian --interface asgi --host 0.0.0.0 --port 8000 main:app
+endif
 
-ifeq ($(OS),Linux)
+ifeq ($(OS_DETECTED),Linux)
 	ACTIVATE = . venv/bin/activate
-else ifeq ($(OS),Darwin)
+else ifeq ($(OS_DETECTED),Darwin)
 	ACTIVATE = . venv/bin/activate
-else ifeq ($(OS),Windows_NT)
+else ifeq ($(OS_DETECTED),Windows)
 	ACTIVATE = venv\Scripts\activate.bat
 else
 	$(error Unsupported operating system. Please run on Linux, macOS, or Windows.)
 endif
 
-VENV := python3 -m venv venv
-
 install-be:
-	cd server && $(VENV) && $(ACTIVATE) && CMAKE_ARGS="-DLLAMA_CUBLAS=on" FORCE_CMAKE=1 pip install llama-cpp-python && pip install -r requirements.txt
+	cd server && $(VENV) && $(ACTIVATE) && pip install -r requirements.txt
 
 run-be:
-	cd server && $(ACTIVATE) && cd src && granian --interface asgi --host 0.0.0.0 --port 8000 main:app
+	cd server && $(ACTIVATE) && cd src && $(RUN_CMD)
 
 freeze:
 	cd server && $(ACTIVATE) && pip freeze > requirements.txt
