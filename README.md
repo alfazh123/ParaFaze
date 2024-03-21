@@ -29,6 +29,10 @@ Prerequisites:
 
 -   First, download the model from [here](https://huggingface.co/indischepartij/OpenMia-Indo-Mistral-7b-v4-GGUF/tree/main)
     and place it in the `server/model' directory.
+-   If you are using unix system ucan download teh model using the following command:
+    ```bash
+    make download-model
+    ```
 -   Then, install the required packages using the following command:
     ```bash
     make install-be
