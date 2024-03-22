@@ -1,6 +1,12 @@
 import { FaCopy, FaDownload } from "react-icons/fa"
+import LoadOutput from "./load-output"
 
-export function TextAreaOutput({ textOutput = "" }) {
+interface TextAreaOutputProps {
+    textOutput: string
+    isLoading: boolean
+}
+
+export function TextAreaOutput({ textOutput, isLoading }: TextAreaOutputProps) {
     const copyToClipboard = () => {
         navigator.clipboard
             .writeText(textOutput)
@@ -24,16 +30,22 @@ export function TextAreaOutput({ textOutput = "" }) {
             >
                 Paraphrased Text
             </label>
-            <textarea
-                title="Paraphrased text will appear here"
-                name="User Output"
-                rows={15}
-                className="p-4 outline-none w-full bg-gray-100 rounded shadow-inner"
-                readOnly
-                value={textOutput}
-                style={{ resize: "none", fontFamily: "Inter, sans-serif" }}
-                placeholder="Paraphrased text will appear here..."
-            ></textarea>
+            <div className="relative flex justify-center items-center">
+                <textarea
+                    title="Paraphrased text will appear here"
+                    name="User Output"
+                    rows={15}
+                    className="p-4 outline-none w-full bg-gray-100 rounded shadow-inner"
+                    readOnly
+                    value={textOutput}
+                    style={{ resize: "none", fontFamily: "Inter, sans-serif" }}
+                    placeholder="Paraphrased text will appear here..."
+                >
+                </textarea>
+                <div className={`${isLoading ? "flex backdrop-blur-sm h-full w-full justify-center items-center rounded-md cursor-wait" : "hidden"} absolute`}>
+                    <LoadOutput />
+                </div>
+            </div>
             <div className="flex justify-end items-center space-x-4">
                 <button
                     onClick={copyToClipboard}
