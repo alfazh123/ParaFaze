@@ -19,19 +19,8 @@ else
 	$(error Unsupported operating system. Please run on Linux, macOS, or Windows.)
 endif
 
-install-be:
-	cd server && $(VENV) && $(ACTIVATE) && pip install -r requirements.txt
+install:
+	$(VENV) && $(ACTIVATE) && cd src && pip install -r requirements.txt
 
-run-be:
-	cd server && $(ACTIVATE) && cd src && $(RUN_CMD)
-
-freeze:
-	cd server && $(ACTIVATE) && pip freeze > requirements.txt
-
-venv:
-	$(VENV)
-
-rm-venv:
-	cd server && rm -rf venv
-
-.PHONY: install-be run-be venv help
+run:
+	$(ACTIVATE) && cd src && $(RUN_CMD)

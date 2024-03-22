@@ -80,4 +80,3 @@ dmypy.json
 .pytype/
 cython_debug/
 env
-openmia-indo-mistral-7b-v4.Q4_K_M.gguf
