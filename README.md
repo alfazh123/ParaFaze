@@ -1,10 +1,7 @@
 # ParaFaze
 
 Simple and easy to use tool for paraphasing text. It uses LLM to generate paraphrases of the input text. The tool is
-built using NextJs and FastAPI.
-
-LLM model
-used: [OpenMia-Indo-Mistral-7b-v4-GGUF](https://huggingface.co/indischepartij/OpenMia-Indo-Mistral-7b-v4-GGUF)
+built using NextJs and FastAPI based on T5 model.
 
 # Installation
 
@@ -27,13 +24,7 @@ Prerequisites:
 
 ## Backend
 
--   First, download the model from [here](https://huggingface.co/indischepartij/OpenMia-Indo-Mistral-7b-v4-GGUF/tree/main)
-    and place it in the `server/model' directory.
--   If you are using unix system ucan download teh model using the following command:
-    ```bash
-    make download-model
-    ```
--   Then, install the required packages using the following command:
+-   Install the required packages using the following command:
     ```bash
     make install-be
     ```
