@@ -1,5 +1,6 @@
+import LoadOutput from "@/component/load-output"
+
 import { FaCopy, FaDownload } from "react-icons/fa"
-import LoadOutput from "./load-output"
 
 interface TextAreaOutputProps {
     textOutput: string
@@ -40,16 +41,17 @@ export function TextAreaOutput({ textOutput, isLoading }: TextAreaOutputProps) {
                     value={textOutput}
                     style={{ resize: "none", fontFamily: "Inter, sans-serif" }}
                     placeholder="Paraphrased text will appear here..."
+                />
+                <div
+                    className={`${isLoading ? "flex backdrop-blur-sm h-full w-full justify-center items-center rounded-md" : "hidden"} absolute`}
                 >
-                </textarea>
-                <div className={`${isLoading ? "flex backdrop-blur-sm h-full w-full justify-center items-center rounded-md cursor-wait" : "hidden"} absolute`}>
                     <LoadOutput />
                 </div>
             </div>
             <div className="flex justify-end items-center space-x-4">
                 <button
                     onClick={copyToClipboard}
-                    title="copyButton"
+                    title="Copy Paraphrased Text"
                     className="bg-blue-500 text-white py-2 px-4 rounded cursor-pointer hover:bg-blue-600 transition duration-200"
                 >
                     <FaCopy />
@@ -57,7 +59,7 @@ export function TextAreaOutput({ textOutput, isLoading }: TextAreaOutputProps) {
 
                 <button
                     onClick={downloadText}
-                    title="downloadButton"
+                    title="Download Paraphrased Text"
                     className="bg-green-500 text-white py-2 px-4 rounded cursor-pointer hover:bg-green-600 transition duration-200"
                 >
                     <FaDownload />

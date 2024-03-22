@@ -59,7 +59,7 @@ const LanguageDropdown = ({ language }: { language: string[] }) => {
             </div>
 
             <div
-                className={`origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 transform transition-all duration-300 ease-in-out ${isOpen ? "scale-100 translate-y-0 opacity-100" : "scale-0 -translate-y-2 opacity-0"}`}
+                className={`origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 transform transition-all duration-300 ease-in-out ${isOpen ? "scale-100 translate-y-0 opacity-100" : "scale-0 -translate-y-2 opacity-0"} z-10`}
             >
                 <div
                     className="py-1"

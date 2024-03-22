@@ -2,20 +2,28 @@ import Head from "next/head"
 import { useState } from "react"
 import { SlPencil } from "react-icons/sl"
 
-import LanguageDropdown from "@/pages/component/lang-dropdown"
-import Navbar from "@/pages/component/navbar"
-import { TextAreaInput } from "@/pages/component/text-area-input"
-import { TextAreaOutput } from "@/pages/component/text-area-output"
+import LanguageDropdown from "@/component/lang-dropdown"
+import Navbar from "@/component/navbar"
+import { TextAreaInput } from "@/component/text-area-input"
+import { TextAreaOutput } from "@/component/text-area-output"
 
 import { useSession } from "next-auth/react"
+import { CgSpinner } from "react-icons/cg"
 
-const LANGUAGE = ["English", "Indonesia"]
+const LANGUAGE = ["English", "Indonesia", "German", "Malay", "South Korea"]
 const BUTTONS = ["Standard", "Premium"]
 
 const activeUsageButton =
     "bg-red-600 hover:bg-red-800 transition duration-500 ease-in-out"
 const inactiveUsageButton =
     "bg-gray-400 hover:bg-gray-600 transition duration-500 ease-in-out"
+
+const Metadata = () => (
+    <Head>
+        <title>ParaFaze - Fast and Accurate Paraphrasing Tool</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    </Head>
+)
 
 export default function Home() {
     const { data: session } = useSession()
@@ -30,7 +38,9 @@ export default function Home() {
 
     const handleSubmit = async () => {
         setIsLoading(true)
-        const inputText = localStorage.getItem("cachedText") || ""
+        const inputText = localStorage.getItem("cachedInputText") || ""
+        const language = localStorage.getItem("selectedLanguage") || "English"
+        setTextOutput(" ")
 
         try {
             const response = await fetch("http://localhost:8000/paraphrase", {
@@ -38,13 +48,18 @@ export default function Home() {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ text: inputText }),
+                body: JSON.stringify({
+                    sentence: inputText,
+                    language: language,
+                }),
             })
 
             if (!response.ok) {
                 console.error(`HTTP error! status: ${response.status}`)
             } else {
-                const data = await response.json()
+                const data = await response
+                    .json()
+                    .then((data) => data.paraphrase)
                 setTextOutput(data)
             }
         } catch (error) {
@@ -79,13 +94,7 @@ export default function Home() {
 
     return (
         <>
-            <Head>
-                <title>ParaFaze - Fast and Accurate Paraphrasing Tool</title>
-                <meta
-                    name="viewport"
-                    content="width=device-width, initial-scale=1.0"
-                />
-            </Head>
+            <Metadata />
             <main className="bg-slate-100 flex flex-col items-center min-h-screen font-inter pb-4">
                 <Navbar />
                 <div className={`w-full lg:max-w-6xl pt-16 px-4 md:px-8`}>
@@ -102,7 +111,10 @@ export default function Home() {
                             }
                         />
                         <div className={`md:grid hidden`}>
-                            <TextAreaOutput textOutput={textOutput}  isLoading={isLoading}/>
+                            <TextAreaOutput
+                                textOutput={textOutput}
+                                isLoading={isLoading}
+                            />
                         </div>
                     </div>
                     <div className="flex flex-col gap-5 w-full">
@@ -116,10 +128,18 @@ export default function Home() {
                             onClick={handleSubmit}
                             disabled={isLoading}
                         >
-                            <SlPencil className="text-lg" /> Paraphrase Text
+                            {!isLoading ? (
+                                <SlPencil className="text-lg" />
+                            ) : (
+                                <CgSpinner className="animate-spin" />
+                            )}{" "}
+                            Paraphrase Text
                         </button>
                         <div className={`md:hidden pb-6`}>
-                            <TextAreaOutput textOutput={textOutput} isLoading={isLoading} />
+                            <TextAreaOutput
+                                textOutput={textOutput}
+                                isLoading={isLoading}
+                            />
                         </div>
                     </div>
                 </div>
