@@ -1,12 +1,14 @@
+import handleFileUpload from "@/utils/fileUpload"
+import { charCounts } from "@/utils/textCount"
 import React, { useState } from "react"
 
 export function TextAreaInput({ inputLimit = 5000 }) {
     const [input, setInput] = useState("")
 
     React.useEffect(() => {
-        const cachedText = localStorage.getItem("cachedText")
-        if (cachedText) {
-            setInput(cachedText)
+        const cachedInputText = localStorage.getItem("cachedInputText")
+        if (cachedInputText) {
+            setInput(cachedInputText)
         }
     }, [])
 
@@ -16,20 +18,7 @@ export function TextAreaInput({ inputLimit = 5000 }) {
             text = text.slice(0, inputLimit)
         }
         setInput(text)
-        localStorage.setItem("cachedText", text)
-    }
-
-    const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0]
-        if (file) {
-            const reader = new FileReader()
-            reader.onload = (e) => setInput(e.target?.result as string)
-            reader.readAsText(file)
-        }
-    }
-
-    const charCounts = (str: string) => {
-        return str.length
+        localStorage.setItem("cachedInputText", text)
     }
 
     return (
@@ -49,15 +38,16 @@ export function TextAreaInput({ inputLimit = 5000 }) {
                 draggable={false}
                 style={{ resize: "none", fontFamily: "Inter, sans-serif" }}
                 placeholder="Enter your text here..."
-            >{input}</textarea>
+                value={input}
+            />
             <div className="flex justify-between items-center">
                 <div>
                     <input
                         type="file"
                         accept=".doc,.docx,.pdf,.txt"
-                        onChange={handleFileUpload}
                         className="hidden"
                         id="fileUpload"
+                        onChange={(e) => handleFileUpload(e, setInput)}
                     />
                     <label
                         htmlFor="fileUpload"
