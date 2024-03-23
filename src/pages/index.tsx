@@ -2,11 +2,11 @@ import Head from "next/head"
 import { useContext } from "react"
 import { SlPencil } from "react-icons/sl"
 
-import LanguageDropdown from "@/component/lang-dropdown"
-import Navbar from "@/component/navbar"
-import { TextAreaInput } from "@/component/text-area-input"
-import { TextAreaOutput } from "@/component/text-area-output"
-import UsageTypeButton from "@/component/usage-type-btn"
+import LanguageDropdown from "@/pages/component/lang-dropdown"
+import Navbar from "@/pages/component/navbar"
+import { TextAreaInput } from "@/pages/component/text-area-input"
+import { TextAreaOutput } from "@/pages/component/text-area-output"
+import UsageTypeButton from "@/pages/component/usage-type-btn"
 
 import { AppContext } from "@/AppContextProvider"
 import { postParaphraseText } from "@/services/paraphrase"
@@ -20,20 +20,15 @@ const Metadata = () => (
 )
 
 export default function Home() {
-    const { usageType, setOutput, isLoading, setIsLoading } =
+    const { usageType, setOutput, isLoading, setIsLoading, input, language } =
         useContext(AppContext)
 
     const handleSubmit = async () => {
         setIsLoading(true)
-        const inputText = localStorage.getItem("cachedInputText") || ""
-        const language = localStorage.getItem("selectedLanguage") || "English"
         setOutput(" ")
 
         try {
-            const paraphrasedText = await postParaphraseText(
-                inputText,
-                language,
-            )
+            const paraphrasedText = await postParaphraseText(input, language)
             setOutput(paraphrasedText)
         } catch (error) {
             console.error(error)
