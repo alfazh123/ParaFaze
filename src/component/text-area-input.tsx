@@ -1,16 +1,17 @@
+import { AppContext } from "@/AppContextProvider"
 import handleFileUpload from "@/utils/fileUpload"
 import { charCounts } from "@/utils/textCount"
-import React, { useState } from "react"
+import React, { useContext } from "react"
 
 export function TextAreaInput({ inputLimit = 5000 }) {
-    const [input, setInput] = useState("")
+    const { input, setInput } = useContext(AppContext)
 
     React.useEffect(() => {
         const cachedInputText = localStorage.getItem("cachedInputText")
         if (cachedInputText) {
             setInput(cachedInputText)
         }
-    }, [])
+    }, [setInput])
 
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         let text = e.target.value

@@ -1,22 +1,21 @@
 import LoadOutput from "@/component/load-output"
 
+import { AppContext } from "@/AppContextProvider"
+import { useContext } from "react"
 import { FaCopy, FaDownload } from "react-icons/fa"
 
-interface TextAreaOutputProps {
-    textOutput: string
-    isLoading: boolean
-}
+export function TextAreaOutput() {
+    const { output, isLoading } = useContext(AppContext)
 
-export function TextAreaOutput({ textOutput, isLoading }: TextAreaOutputProps) {
     const copyToClipboard = () => {
         navigator.clipboard
-            .writeText(textOutput)
+            .writeText(output)
             .then((_) => alert("Copied to clipboard"))
     }
 
     const downloadText = () => {
         const element = document.createElement("a")
-        const file = new Blob([textOutput], { type: "text/plain" })
+        const file = new Blob([output], { type: "text/plain" })
         element.href = URL.createObjectURL(file)
         element.download = "output.txt"
         document.body.appendChild(element)
@@ -38,7 +37,7 @@ export function TextAreaOutput({ textOutput, isLoading }: TextAreaOutputProps) {
                     rows={15}
                     className="p-4 outline-none w-full bg-gray-100 rounded shadow-inner"
                     readOnly
-                    value={textOutput}
+                    value={output}
                     style={{ resize: "none", fontFamily: "Inter, sans-serif" }}
                     placeholder="Paraphrased text will appear here..."
                 />
