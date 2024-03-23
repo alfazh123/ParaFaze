@@ -4,7 +4,7 @@ import { charCounts } from "@/utils/textCount"
 import React, { useContext } from "react"
 
 export function TextAreaInput({ inputLimit = 5000 }) {
-    const { input, setInput } = useContext(AppContext)
+    const { input, setInput, setOutput } = useContext(AppContext)
 
     React.useEffect(() => {
         const cachedInputText = localStorage.getItem("cachedInputText")
@@ -15,8 +15,11 @@ export function TextAreaInput({ inputLimit = 5000 }) {
 
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         let text = e.target.value
+        setOutput(" ")
         if (text.length > inputLimit) {
             text = text.slice(0, inputLimit)
+        } else if (text.length === 0) {
+            setOutput("")
         }
         setInput(text)
         localStorage.setItem("cachedInputText", text)
@@ -34,10 +37,10 @@ export function TextAreaInput({ inputLimit = 5000 }) {
                 title="Enter your text here"
                 name="User Input"
                 rows={15}
-                className="p-4 outline-none w-full bg-gray-100 rounded shadow-inner"
+                className="p-4 outline-none w-full bg-gray-50 rounded shadow-inner transition duration-200 focus:bg-slate-50 focus:bg-opacity-80"
                 onChange={handleChange}
                 draggable={false}
-                style={{ resize: "none", fontFamily: "Inter, sans-serif" }}
+                style={{ resize: "none" }}
                 placeholder="Enter your text here..."
                 value={input}
             />
@@ -45,16 +48,16 @@ export function TextAreaInput({ inputLimit = 5000 }) {
                 <div>
                     <input
                         type="file"
-                        accept=".doc,.docx,.pdf,.txt"
+                        accept=".txt"
                         className="hidden"
                         id="fileUpload"
                         onChange={(e) => handleFileUpload(e, setInput)}
                     />
                     <label
                         htmlFor="fileUpload"
-                        className="bg-slate-500 text-white py-1 px-2 md:py-2 md:px-4 rounded cursor-pointer hover:bg-slate-600 transition duration-200 md:text-sm text-xs select-none"
+                        className="bg-slate-700 text-white py-2 px-2 md:px-6 rounded cursor-pointer hover:bg-slate-600 transition duration-200 md:text-sm text-xs select-none font-medium"
                     >
-                        Select File .Doc / .Docx / .Pdf /.Txt
+                        Select File (.txt)
                     </label>
                 </div>
                 <p className="text-gray-700 md:text-sm text-xs">

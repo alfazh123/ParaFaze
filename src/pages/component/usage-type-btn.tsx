@@ -9,21 +9,23 @@ const inactiveUsageButton =
     "bg-gray-400 hover:bg-gray-600 transition duration-500 ease-in-out"
 
 const UsageTypeButton = () => {
-    const { usageType, setUsageType } = useContext(AppContext)
+    const { data: session } = useSession()
+    const { usageType, setUsageType, setInput, setOutput } =
+        useContext(AppContext)
 
     const handleButtonClick = (buttonName: string) => {
         setUsageType(buttonName)
+        setInput("")
+        setOutput("")
         localStorage.setItem("cachedUsageType", buttonName)
     }
 
     useEffect(() => {
         const cachedUsageType = localStorage.getItem("cachedUsageType")
-        if (cachedUsageType) {
+        if (cachedUsageType && session) {
             setUsageType(cachedUsageType)
         }
-    }, [setUsageType])
-
-    const { data: session } = useSession()
+    }, [setUsageType, session])
 
     return (
         <>

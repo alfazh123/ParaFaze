@@ -35,7 +35,7 @@ export function TextAreaOutput() {
                     title="Paraphrased text will appear here"
                     name="User Output"
                     rows={15}
-                    className="p-4 outline-none w-full bg-gray-100 rounded shadow-inner"
+                    className="p-4 outline-none w-full bg-gray-50 rounded shadow-inner transition duration-200 focus:bg-slate-50 focus:bg-opacity-80"
                     readOnly
                     value={output}
                     style={{ resize: "none", fontFamily: "Inter, sans-serif" }}
@@ -47,11 +47,14 @@ export function TextAreaOutput() {
                     <LoadOutput />
                 </div>
             </div>
-            <div className="flex justify-end items-center space-x-4">
+            <div
+                className={`flex justify-end items-center space-x-4 ${(output.length === 0 && !isLoading) || output === " " ? "hidden" : "flex"}`}
+            >
                 <button
                     onClick={copyToClipboard}
                     title="Copy Paraphrased Text"
-                    className="bg-blue-500 text-white py-2 px-4 rounded cursor-pointer hover:bg-blue-600 transition duration-200"
+                    className={`bg-blue-500 text-white py-2 px-4 rounded cursor-pointer hover:bg-blue-600 transition duration-200`}
+                    disabled={isLoading}
                 >
                     <FaCopy />
                 </button>
