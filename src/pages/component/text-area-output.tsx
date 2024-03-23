@@ -1,4 +1,4 @@
-import LoadOutput from "@/component/load-output"
+import LoadOutput from "@/pages/component/load-output"
 
 import { AppContext } from "@/AppContextProvider"
 import { useContext } from "react"

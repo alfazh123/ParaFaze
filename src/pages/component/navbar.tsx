@@ -1,5 +1,5 @@
-import Profile from "@/component/profile"
-import UserToast from "@/component/user-toast"
+import Profile from "@/pages/component/profile"
+import UserToast from "@/pages/component/user-toast"
 import { useSession } from "next-auth/react"
 import Image from "next/image"
 import Link from "next/link"
