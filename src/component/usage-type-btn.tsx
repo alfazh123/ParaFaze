@@ -1,7 +1,7 @@
 import { AppContext } from "@/AppContextProvider"
 import { USAGETYPE } from "@/Const"
 import { useSession } from "next-auth/react"
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 
 const activeUsageButton =
     "bg-red-600 hover:bg-red-800 transition duration-500 ease-in-out"
@@ -13,7 +13,16 @@ const UsageTypeButton = () => {
 
     const handleButtonClick = (buttonName: string) => {
         setUsageType(buttonName)
+        localStorage.setItem("cachedUsageType", buttonName)
     }
+
+    useEffect(() => {
+        const cachedUsageType = localStorage.getItem("cachedUsageType")
+        if (cachedUsageType) {
+            setUsageType(cachedUsageType)
+        }
+    }, [setUsageType])
+
     const { data: session } = useSession()
 
     return (
