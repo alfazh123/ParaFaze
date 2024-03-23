@@ -1,9 +1,9 @@
-import Profile from "@/pages/component/profile"
+import Profile from "@/component/profile"
+import UserToast from "@/component/user-toast"
 import { useSession } from "next-auth/react"
 import Image from "next/image"
 import Link from "next/link"
 import { useEffect } from "react"
-import UserToast from "./user-toast"
 
 export default function Navbar() {
     const { data: session } = useSession()

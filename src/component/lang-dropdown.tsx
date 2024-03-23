@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react"
+import { AppContext } from "@/AppContextProvider"
+import { LANGUAGE } from "@/Const"
+import { useContext, useEffect, useState } from "react"
 
-const LanguageDropdown = ({ language }: { language: string[] }) => {
+const LanguageDropdown = () => {
     const [isOpen, setIsOpen] = useState(false)
-    const [selectedLanguage, setSelectedLanguage] = useState("")
+    const { language: selectedLanguage, setLanguage } = useContext(AppContext)
     const [isClient, setIsClient] = useState(false)
 
     useEffect(() => {
@@ -11,19 +13,19 @@ const LanguageDropdown = ({ language }: { language: string[] }) => {
 
     useEffect(() => {
         if (isClient) {
-            setSelectedLanguage(
+            setLanguage(
                 localStorage.getItem("selectedLanguage") ||
-                    (language.length > 0 ? language[0] : ""),
+                    (LANGUAGE.length > 0 ? LANGUAGE[0] : ""),
             )
         }
-    }, [isClient, language])
+    }, [isClient, setLanguage])
 
     const handleDropdownClick = () => {
         setIsOpen(!isOpen)
     }
 
     const handleOptionClick = (lang: string) => {
-        setSelectedLanguage(lang)
+        setLanguage(lang)
         setIsOpen(false)
         if (typeof window !== "undefined") {
             localStorage.setItem("selectedLanguage", lang)
@@ -59,7 +61,7 @@ const LanguageDropdown = ({ language }: { language: string[] }) => {
             </div>
 
             <div
-                className={`origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 transform transition-all duration-300 ease-in-out ${isOpen ? "scale-100 translate-y-0 opacity-100" : "scale-0 -translate-y-2 opacity-0"}`}
+                className={`origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 transform transition-all duration-300 ease-in-out ${isOpen ? "scale-100 translate-y-0 opacity-100" : "scale-0 -translate-y-2 opacity-0"} z-10`}
             >
                 <div
                     className="py-1"
@@ -67,7 +69,7 @@ const LanguageDropdown = ({ language }: { language: string[] }) => {
                     aria-orientation="vertical"
                     aria-labelledby="options-menu"
                 >
-                    {language.map((lang) => (
+                    {LANGUAGE.map((lang) => (
                         <a
                             key={lang}
                             onClick={() => handleOptionClick(lang)}

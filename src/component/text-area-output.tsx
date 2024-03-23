@@ -1,21 +1,21 @@
+import LoadOutput from "@/component/load-output"
+
+import { AppContext } from "@/AppContextProvider"
+import { useContext } from "react"
 import { FaCopy, FaDownload } from "react-icons/fa"
-import LoadOutput from "./load-output"
 
-interface TextAreaOutputProps {
-    textOutput: string
-    isLoading: boolean
-}
+export function TextAreaOutput() {
+    const { output, isLoading } = useContext(AppContext)
 
-export function TextAreaOutput({ textOutput, isLoading }: TextAreaOutputProps) {
     const copyToClipboard = () => {
         navigator.clipboard
-            .writeText(textOutput)
+            .writeText(output)
             .then((_) => alert("Copied to clipboard"))
     }
 
     const downloadText = () => {
         const element = document.createElement("a")
-        const file = new Blob([textOutput], { type: "text/plain" })
+        const file = new Blob([output], { type: "text/plain" })
         element.href = URL.createObjectURL(file)
         element.download = "output.txt"
         document.body.appendChild(element)
@@ -37,19 +37,20 @@ export function TextAreaOutput({ textOutput, isLoading }: TextAreaOutputProps) {
                     rows={15}
                     className="p-4 outline-none w-full bg-gray-100 rounded shadow-inner"
                     readOnly
-                    value={textOutput}
+                    value={output}
                     style={{ resize: "none", fontFamily: "Inter, sans-serif" }}
                     placeholder="Paraphrased text will appear here..."
+                />
+                <div
+                    className={`${isLoading ? "flex backdrop-blur-sm h-full w-full justify-center items-center rounded-md" : "hidden"} absolute`}
                 >
-                </textarea>
-                <div className={`${isLoading ? "flex backdrop-blur-sm h-full w-full justify-center items-center rounded-md cursor-wait" : "hidden"} absolute`}>
                     <LoadOutput />
                 </div>
             </div>
             <div className="flex justify-end items-center space-x-4">
                 <button
                     onClick={copyToClipboard}
-                    title="copyButton"
+                    title="Copy Paraphrased Text"
                     className="bg-blue-500 text-white py-2 px-4 rounded cursor-pointer hover:bg-blue-600 transition duration-200"
                 >
                     <FaCopy />
@@ -57,7 +58,7 @@ export function TextAreaOutput({ textOutput, isLoading }: TextAreaOutputProps) {
 
                 <button
                     onClick={downloadText}
-                    title="downloadButton"
+                    title="Download Paraphrased Text"
                     className="bg-green-500 text-white py-2 px-4 rounded cursor-pointer hover:bg-green-600 transition duration-200"
                 >
                     <FaDownload />
