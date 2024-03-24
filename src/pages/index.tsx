@@ -9,6 +9,7 @@ import { TextAreaOutput } from "@/pages/component/text-area-output"
 import UsageTypeButton from "@/pages/component/usage-type-btn"
 
 import { AppContext } from "@/AppContextProvider"
+import Footer from "@/pages/component/footer"
 import { postParaphraseText } from "@/services/paraphrase"
 import { CgSpinner } from "react-icons/cg"
 
@@ -41,7 +42,7 @@ export default function Home() {
     return (
         <>
             <Metadata />
-            <main className="bg-slate-100 flex flex-col items-center min-h-screen font-inter pb-4">
+            <main className="bg-sky-200 flex flex-col items-center min-h-screen bg-opacity-10">
                 <Navbar />
                 <div className={`w-full lg:max-w-6xl pt-16 px-4 md:px-8`}>
                     <div className="flex flex-wrap md:text-base text-sm justify-between w-full">
@@ -81,6 +82,7 @@ export default function Home() {
                         </div>
                     </div>
                 </div>
+                <Footer />
             </main>
         </>
     )
