@@ -1,12 +1,12 @@
-import Head from "next/head"
-import { useContext } from "react"
-import { SlPencil } from "react-icons/sl"
-
 import LanguageDropdown from "@/pages/component/lang-dropdown"
 import Navbar from "@/pages/component/navbar"
 import { TextAreaInput } from "@/pages/component/text-area-input"
 import { TextAreaOutput } from "@/pages/component/text-area-output"
 import UsageTypeButton from "@/pages/component/usage-type-btn"
+import Head from "next/head"
+import { useContext } from "react"
+import { FaArrowRightArrowLeft } from "react-icons/fa6"
+import { SlPencil } from "react-icons/sl"
 
 import { AppContext } from "@/AppContextProvider"
 import Footer from "@/pages/component/footer"
@@ -21,8 +21,16 @@ const Metadata = () => (
 )
 
 export default function Home() {
-    const { usageType, setOutput, isLoading, setIsLoading, input, language } =
-        useContext(AppContext)
+    const {
+        usageType,
+        setOutput,
+        isLoading,
+        setIsLoading,
+        input,
+        language,
+        setInput,
+        output,
+    } = useContext(AppContext)
 
     const handleSubmit = async () => {
         setIsLoading(true)
@@ -31,6 +39,20 @@ export default function Home() {
         try {
             const paraphrasedText = await postParaphraseText(input, language)
             setOutput(paraphrasedText)
+        } catch (error) {
+            console.error(error)
+            setOutput("An error occurred. Please try again.")
+        } finally {
+            setIsLoading(false)
+        }
+    }
+    const handleSwap = async () => {
+        setIsLoading(true)
+
+        try {
+            const Temp = input
+            setInput(output)
+            setOutput(Temp)
         } catch (error) {
             console.error(error)
             setOutput("An error occurred. Please try again.")
@@ -48,6 +70,12 @@ export default function Home() {
                     <div className="flex flex-wrap md:text-base text-sm justify-between w-full">
                         <div className="flex gap-2 md:gap-4">
                             <UsageTypeButton />
+                            <button
+                                className={`bg-blue-500 text-white py-3 px-4 rounded-lg cursor-pointer hover:bg-blue-600 transition duration-200`}
+                                onClick={handleSwap}
+                            >
+                                <FaArrowRightArrowLeft />
+                            </button>
                         </div>
                         <LanguageDropdown />
                     </div>
