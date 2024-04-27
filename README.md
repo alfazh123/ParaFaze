@@ -30,7 +30,7 @@ Prerequisites:
     ```
 -   Finally, start the server using the following command:
     ```bash
-    make start-be
+    make run-be
     ```
 
 # Contributing
