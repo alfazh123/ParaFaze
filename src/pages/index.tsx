@@ -71,6 +71,7 @@ export default function Home() {
                         <div className="flex gap-2 md:gap-4">
                             <UsageTypeButton />
                             <button
+                                title="Swap Texts"
                                 className={`bg-blue-500 text-white py-3 px-4 rounded-lg cursor-pointer hover:bg-blue-600 transition duration-200`}
                                 onClick={handleSwap}
                             >

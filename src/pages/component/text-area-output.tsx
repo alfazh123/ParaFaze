@@ -6,6 +6,20 @@ import { FaCopy, FaDownload } from "react-icons/fa"
 
 export function TextAreaOutput() {
     const { output, isLoading } = useContext(AppContext)
+    const { input } = useContext(AppContext)
+
+    const inputWords = input.toLowerCase().split(" ")
+
+    const generateOutput = () => {
+        return output.split(" ").map((word, index)=> {
+            if (inputWords.includes(word.toLowerCase())) {
+                return <span key={index} className="">{word} </span>
+            } else {
+                return <span key={index} className="font-semibold">{word} </span>
+            }
+        
+        })
+    }
 
     const copyToClipboard = () => {
         navigator.clipboard
@@ -31,16 +45,13 @@ export function TextAreaOutput() {
                 Paraphrased Text
             </label>
             <div className="relative flex justify-center items-center">
-                <textarea
+                <div
                     title="Paraphrased text will appear here"
-                    name="User Output"
-                    rows={15}
-                    className="p-4 outline-none w-full bg-gray-50 rounded shadow-inner transition duration-200 focus:bg-slate-50 focus:bg-opacity-80"
-                    readOnly
-                    value={output}
+                    className={`p-4 outline-none w-full bg-gray-50 rounded shadow-inner transition duration-200 focus:bg-slate-50 focus:bg-opacity-80 h-[392px]`}
                     style={{ resize: "none", fontFamily: "Inter, sans-serif" }}
-                    placeholder="Paraphrased text will appear here..."
-                />
+                >
+                    {generateOutput()}
+                </div>
                 <div
                     className={`${isLoading ? "flex backdrop-blur-sm h-full w-full justify-center items-center rounded-md" : "hidden"} absolute`}
                 >
